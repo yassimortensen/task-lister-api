@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
 
+  before_action :set_task, only: [:show, :update, :destroy]
+
   def index
-    tasks = Task.all
-    render json: tasks
+    render json: Task.all
   end
 
   def create
@@ -15,8 +16,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    task = Task.find(params[:id])
-    render json: task
+    render json: @task
   end
 
   def update
@@ -31,6 +31,10 @@ class TasksController < ApplicationController
 
   def task_params
     params.permit(:description, :list_id)
+  end
+
+  def set_task
+    @task = Task.find(params[:id])
   end
 
 end
